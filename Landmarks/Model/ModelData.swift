@@ -13,6 +13,17 @@ final class ModelData: ObservableObject {
     @Published var landmarks: [Landmark] = load("landmarkData.json")
     // hike는 Published가 없는 이유 : 구독하여 변경시킬 데이터가 아니기 때문에.
     var hikes: [Hike] = load("hikeData.json")
+    
+    var features: [Landmark] {
+        landmarks.filter{$0.isFeatured}
+    }
+    
+    var categories: [String: [Landmark]] {
+        Dictionary(
+            grouping: landmarks,
+            by: {$0.category.rawValue}
+        )
+    }
 }
 
 
